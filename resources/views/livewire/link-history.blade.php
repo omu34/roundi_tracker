@@ -13,12 +13,8 @@
     <!-- Search and Stats -->
     <div class="mb-6 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
         <div class="w-full md:w-1/3">
-            <input
-                type="text"
-                wire:model.live.debounce.300ms="search"
-                placeholder="Search by URL or Title..."
-                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-            >
+            <input type="text" wire:model.live.debounce.300ms="search" placeholder="Search by URL or Title..."
+                class="w-full border-gray-300 rounded-lg shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
         </div>
 
         <p class="text-sm text-gray-500">
@@ -42,10 +38,14 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">URL</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Clicked At</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Title
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">URL
+                        </th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Clicked At</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                            Action</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -76,6 +76,10 @@
                 </tbody>
             </table>
         @endif
+        <div class="justify-center items-center mt-6">
+            <livewire:track-link-click url="https://github.com" />
+            <livewire:track-link-click url="{{ route('dashboard') }}" />
+        </div>
     </div>
 
     <!-- Pagination -->
