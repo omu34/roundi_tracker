@@ -2,18 +2,29 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends Factory<User>
  */
 class UserFactory extends Factory
 {
     /**
-     * The current password being used by the factory.
+     * The name of the factory's corresponding model.
+     *
+     * @var class-string<User>
      */
-    protected static ?string $password;
+    protected $model = User::class;
+
+    /**
+     * The current password being used by the factory.
+     *
+     * @var string|null
+     */
+    protected static ?string $password = null;
 
     /**
      * Define the model's default state.
@@ -23,40 +34,34 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->unique()->safeEmail(),
+            'name'              => $this->faker->name(),
+            'email'             => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => bcrypt('password'), // default password
-            'remember_token' => Str::random(10),
+            'password'          => static::$password ??= Hash::make('password'),
+            'remember_token'    => Str::random(10),
         ];
     }
 
+    /**
+     * Indicate that the user's email address should be unverified.
+     */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn () => [
             'email_verified_at' => null,
         ]);
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
-     */
-    // public function unverified(): static
-    // {
-    //     return $this->state(fn (array $attributes) => [
-    //         'email_verified_at' => null,
-    //     ]);
-    // }
-
-    /**
-     * Indicate that the model does not have two-factor authentication configured.
+     * Indicate that the user does not have two-factor authentication configured.
      */
     public function withoutTwoFactor(): static
     {
-        return $this->state(fn (array $attributes) => [
-            'two_factor_secret' => null,
+        return $this->state(fn () => [
+            'two_factor_secret'         => null,
             'two_factor_recovery_codes' => null,
-            'two_factor_confirmed_at' => null,
+            'two_factor_confirmed_at'   => null,
         ]);
     }
 }
+
